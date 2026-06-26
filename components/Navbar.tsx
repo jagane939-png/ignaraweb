@@ -20,7 +20,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 32);
+    const fn = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
@@ -32,119 +32,121 @@ export function Navbar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "glass border-b py-3"
-          : "bg-transparent py-5"
-      }`}
-      style={{ borderColor: scrolled ? "var(--border)" : "transparent" }}
+      style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
+        transition: "all 0.4s ease",
+        padding: scrolled ? "10px 0" : "18px 0",
+        background: scrolled ? "rgba(7,13,26,0.85)" : "transparent",
+        backdropFilter: scrolled ? "blur(24px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
+      }}
     >
-      <nav className="max-w-6xl mx-auto px-6 flex items-center justify-between" aria-label="Main navigation">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group" aria-label="Ignara AI">
-          <div className="relative w-7 h-7 flex-shrink-0">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-              <rect width="28" height="28" rx="7" fill="url(#logo-grad)" />
-              <path d="M14 5L20.5 8.75V16.25L14 20L7.5 16.25V8.75L14 5Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" fill="none"/>
-              <circle cx="14" cy="12.5" r="2.2" fill="white"/>
-              <line x1="14" y1="5" x2="14" y2="10.3" stroke="white" strokeWidth="0.9" strokeOpacity="0.5"/>
-              <line x1="14" y1="14.7" x2="14" y2="20" stroke="white" strokeWidth="0.9" strokeOpacity="0.5"/>
-              <line x1="20.5" y1="8.75" x2="16.1" y2="11.3" stroke="white" strokeWidth="0.9" strokeOpacity="0.5"/>
-              <line x1="11.9" y1="13.7" x2="7.5" y2="16.25" stroke="white" strokeWidth="0.9" strokeOpacity="0.5"/>
-              <line x1="7.5" y1="8.75" x2="11.9" y2="11.3" stroke="white" strokeWidth="0.9" strokeOpacity="0.5"/>
-              <line x1="16.1" y1="13.7" x2="20.5" y2="16.25" stroke="white" strokeWidth="0.9" strokeOpacity="0.5"/>
-              <defs>
-                <linearGradient id="logo-grad" x1="0" y1="0" x2="28" y2="28">
-                  <stop stopColor="#2563eb"/>
-                  <stop offset="1" stopColor="#06b6d4"/>
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-          <span className="font-semibold text-[15px] text-white tracking-[-0.02em]">
-            Ignara <span style={{ color: "var(--accent)" }}>AI</span>
+      <nav style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }} aria-label="Main navigation">
+
+        {/* ── Logo ── */}
+        <Link href="/" aria-label="Ignara AI home" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
+          {/* Custom geometric logo mark */}
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="lg1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#3b82f6"/>
+                <stop offset="100%" stopColor="#06b6d4"/>
+              </linearGradient>
+            </defs>
+            {/* Outer hexagon */}
+            <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" fill="url(#lg1)" opacity="0.15"/>
+            <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="url(#lg1)" strokeWidth="1.2" fill="none"/>
+            {/* Inner diamond */}
+            <path d="M16 8L22 12V20L16 24L10 20V12L16 8Z" fill="url(#lg1)" opacity="0.3"/>
+            {/* Center node */}
+            <circle cx="16" cy="16" r="3" fill="url(#lg1)"/>
+            {/* Connection lines */}
+            <line x1="16" y1="2" x2="16" y2="13" stroke="url(#lg1)" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="16" y1="19" x2="16" y2="30" stroke="url(#lg1)" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="28" y1="9" x2="19.2" y2="13.5" stroke="url(#lg1)" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="12.8" y1="18.5" x2="4" y2="23" stroke="url(#lg1)" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="4" y1="9" x2="12.8" y2="13.5" stroke="url(#lg1)" strokeWidth="0.8" opacity="0.6"/>
+            <line x1="19.2" y1="18.5" x2="28" y2="23" stroke="url(#lg1)" strokeWidth="0.8" opacity="0.6"/>
+          </svg>
+          <span style={{ fontWeight: 700, fontSize: "16px", letterSpacing: "-0.03em", color: "#fff" }}>
+            Ignara<span style={{ color: "#06b6d4", marginLeft: "1px" }}>AI</span>
           </span>
         </Link>
 
-        {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-1" role="list">
+        {/* ── Desktop links ── */}
+        <ul style={{ display: "flex", alignItems: "center", gap: "2px", listStyle: "none", margin: 0, padding: 0 }} role="list">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
               <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="relative px-4 py-2 rounded-lg text-[13px] font-medium transition-colors duration-200 block"
-                  style={{ color: active ? "var(--text-1)" : "var(--text-3)" }}
-                  aria-current={active ? "page" : undefined}
-                  onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.8)"; }}
-                  onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "var(--text-3)"; }}
+                <Link href={link.href} aria-current={active ? "page" : undefined}
+                  style={{
+                    position: "relative", display: "block",
+                    padding: "7px 16px", borderRadius: "8px",
+                    fontSize: "13.5px", fontWeight: active ? 500 : 400,
+                    color: active ? "#fff" : "rgba(255,255,255,0.45)",
+                    textDecoration: "none", transition: "color 0.2s",
+                    background: active ? "rgba(255,255,255,0.07)" : "transparent",
+                    border: active ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent",
+                  }}
+                  onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.85)"; }}
+                  onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.45)"; }}
                 >
-                  {active && (
-                    <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-lg"
-                      style={{ background: "var(--surface-2)", border: "1px solid var(--border-2)" }}
-                      transition={{ type: "spring", stiffness: 320, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative">{link.label}</span>
+                  {link.label}
                 </Link>
               </li>
             );
           })}
         </ul>
 
-        {/* CTA */}
-        <Link
-          href="/contact"
-          className="hidden md:inline-flex items-center px-4 py-2 rounded-lg text-white text-[13px] font-semibold transition-all duration-200"
-          style={{ background: "var(--primary)" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--primary-h)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 24px rgba(37,99,235,0.3)"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--primary)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
+        {/* ── CTA Button ── */}
+        <Link href="/contact"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "6px",
+            padding: "9px 20px", borderRadius: "10px",
+            background: "linear-gradient(135deg, #2563eb, #1d84c0)",
+            color: "#fff", fontSize: "13.5px", fontWeight: 600,
+            textDecoration: "none", letterSpacing: "-0.01em",
+            boxShadow: "0 1px 0 rgba(255,255,255,0.12) inset, 0 4px 16px rgba(37,99,235,0.25)",
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.boxShadow = "0 1px 0 rgba(255,255,255,0.12) inset, 0 8px 24px rgba(37,99,235,0.4)";
+            (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.boxShadow = "0 1px 0 rgba(255,255,255,0.12) inset, 0 4px 16px rgba(37,99,235,0.25)";
+            (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+          }}
         >
           Get in Touch
         </Link>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden p-2 rounded-lg transition-all"
-          style={{ color: "var(--text-3)" }}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
+        {/* ── Mobile toggle ── */}
+        <button onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}
+          style={{ display: "none", padding: "8px", borderRadius: "8px", background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer" }}
+          className="mobile-menu-btn">
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
-      {/* Mobile drawer */}
+      {/* ── Mobile drawer ── */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22 }}
-            className="md:hidden overflow-hidden glass border-t"
-            style={{ borderColor: "var(--border)" }}
-          >
-            <ul className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-1">
+            style={{ overflow: "hidden", background: "rgba(7,13,26,0.95)", borderTop: "1px solid rgba(255,255,255,0.07)", backdropFilter: "blur(24px)" }}>
+            <ul style={{ maxWidth: "1152px", margin: "0 auto", padding: "16px 24px", display: "flex", flexDirection: "column", gap: "4px", listStyle: "none" }}>
               {links.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href}
-                    className="block px-4 py-3 rounded-xl text-sm transition-all"
-                    style={{
-                      color: pathname === link.href ? "var(--text-1)" : "var(--text-3)",
-                      background: pathname === link.href ? "var(--surface-2)" : "transparent",
-                    }}
-                  >
+                  <Link href={link.href} style={{ display: "block", padding: "12px 16px", borderRadius: "10px", fontSize: "15px", color: pathname === link.href ? "#fff" : "rgba(255,255,255,0.5)", background: pathname === link.href ? "rgba(255,255,255,0.07)" : "transparent", textDecoration: "none" }}>
                     {link.label}
                   </Link>
                 </li>
               ))}
-              <li className="mt-2 pt-2" style={{ borderTop: "1px solid var(--border)" }}>
-                <Link href="/contact" className="block px-4 py-3 rounded-xl text-white text-sm font-semibold text-center transition-all" style={{ background: "var(--primary)" }}>
+              <li style={{ marginTop: "8px", paddingTop: "8px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                <Link href="/contact" style={{ display: "block", padding: "12px 16px", borderRadius: "10px", background: "#2563eb", color: "#fff", fontSize: "15px", fontWeight: 600, textAlign: "center", textDecoration: "none" }}>
                   Get in Touch
                 </Link>
               </li>
@@ -152,6 +154,13 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .mobile-menu-btn { display: flex !important; }
+          nav ul, nav > a:last-of-type { display: none !important; }
+        }
+      `}</style>
     </motion.header>
   );
 }
