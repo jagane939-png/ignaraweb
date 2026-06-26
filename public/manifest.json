@@ -1,0 +1,12 @@
+{
+  "name": "Ignara AI",
+  "short_name": "Ignara AI",
+  "description": "Building the Future of AI Infrastructure",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070d1a",
+  "theme_color": "#070d1a",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "any", "type": "image/x-icon" }
+  ]
+}

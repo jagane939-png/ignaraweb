@@ -1,53 +1,80 @@
+"use client";
+
 import Link from "next/link";
-import { GitBranch, ExternalLink, Mail } from "lucide-react";
+import { GitBranch, ExternalLink, Mail, ArrowUpRight } from "lucide-react";
 
 const nav = [
-  { href: "/about", label: "About" },
-  { href: "/vision", label: "Vision" },
-  { href: "/research", label: "Research" },
-  { href: "/contact", label: "Contact" },
-];
-
-const legal = [
-  { href: "/privacy", label: "Privacy Policy" },
-  { href: "/terms", label: "Terms of Service" },
+  { label: "Company", links: [
+    { href: "/about", label: "About" },
+    { href: "/vision", label: "Vision" },
+    { href: "/research", label: "Research" },
+    { href: "/contact", label: "Contact" },
+  ]},
+  { label: "Research", links: [
+    { href: "/research", label: "Ignara Fabric" },
+    { href: "/research", label: "Space Intelligence" },
+    { href: "/research", label: "Memory Architecture" },
+    { href: "/research", label: "Inference Systems" },
+  ]},
+  { label: "Legal", links: [
+    { href: "/privacy", label: "Privacy Policy" },
+    { href: "/terms", label: "Terms of Service" },
+  ]},
 ];
 
 export function Footer() {
   return (
-    <footer style={{ background: "#060c16", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-      <div className="max-w-6xl mx-auto px-6 pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+    <footer style={{ background: "#040910", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="max-w-6xl mx-auto px-6 pt-20 pb-12">
+        {/* Top */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
           {/* Brand */}
           <div className="md:col-span-5">
-            <Link href="/" className="flex items-center gap-2.5 mb-5" aria-label="Ignara AI">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M8 1L13.5 4.25V10.75L8 14L2.5 10.75V4.25L8 1Z" stroke="white" strokeWidth="1.4" strokeLinejoin="round"/>
-                  <circle cx="8" cy="7.5" r="1.8" fill="white"/>
-                </svg>
-              </div>
+            <Link href="/" className="flex items-center gap-3 mb-6" aria-label="Ignara AI">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <rect width="28" height="28" rx="7" fill="url(#f-logo-grad)" />
+                <path d="M14 5L20.5 8.75V16.25L14 20L7.5 16.25V8.75L14 5Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" fill="none"/>
+                <circle cx="14" cy="12.5" r="2.2" fill="white"/>
+                <defs>
+                  <linearGradient id="f-logo-grad" x1="0" y1="0" x2="28" y2="28">
+                    <stop stopColor="#2563eb"/><stop offset="1" stopColor="#06b6d4"/>
+                  </linearGradient>
+                </defs>
+              </svg>
               <span className="font-semibold text-[15px] text-white tracking-tight">
-                Ignara <span className="text-cyan-400">AI</span>
+                Ignara <span style={{ color: "#06b6d4" }}>AI</span>
               </span>
             </Link>
-            <p className="text-white/35 text-sm leading-relaxed max-w-xs mb-6">
+            <p className="text-sm leading-relaxed mb-8 max-w-xs" style={{ color: "rgba(240,244,255,0.32)" }}>
               Building intelligent infrastructure for the next generation of artificial intelligence systems.
             </p>
+            <div className="flex flex-col gap-2.5 mb-8">
+              {[
+                { href: "mailto:contact@ignara.ai", label: "contact@ignara.ai" },
+                { href: "mailto:jagan@ignara.ai", label: "jagan@ignara.ai" },
+              ].map((e) => (
+                <a key={e.href} href={e.href}
+                  className="inline-flex items-center gap-2 text-sm transition-colors duration-200"
+                  style={{ color: "rgba(240,244,255,0.32)" }}
+                  onMouseEnter={(el) => { (el.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.7)"; }}
+                  onMouseLeave={(el) => { (el.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.32)"; }}
+                >
+                  <Mail size={13} aria-hidden="true" />
+                  {e.label}
+                </a>
+              ))}
+            </div>
             <div className="flex items-center gap-2">
               {[
                 { href: "https://linkedin.com", icon: ExternalLink, label: "LinkedIn" },
                 { href: "https://github.com/jagane939-png", icon: GitBranch, label: "GitHub" },
-                { href: "mailto:contact@ignara.ai", icon: Mail, label: "Email" },
               ].map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target={s.href.startsWith("http") ? "_blank" : undefined}
-                  rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white transition-all duration-200"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)" }}
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
+                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(240,244,255,0.3)" }}
                   aria-label={s.label}
+                  onMouseEnter={(el) => { (el.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.8)"; (el.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)"; }}
+                  onMouseLeave={(el) => { (el.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.3)"; (el.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)"; }}
                 >
                   <s.icon size={14} />
                 </a>
@@ -55,54 +82,54 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Links */}
-          <div className="md:col-span-3">
-            <p className="text-white/25 text-[10px] font-semibold uppercase tracking-[0.12em] mb-4">Company</p>
-            <ul className="space-y-2.5">
-              {nav.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-white/40 hover:text-white text-sm transition-colors duration-200">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Nav columns */}
+          {nav.map((col) => (
+            <div key={col.label} className="md:col-span-2">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] mb-5" style={{ color: "rgba(240,244,255,0.2)" }}>
+                {col.label}
+              </p>
+              <ul className="space-y-3">
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <Link href={l.href}
+                      className="text-sm transition-colors duration-200"
+                      style={{ color: "rgba(240,244,255,0.38)" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.75)"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.38)"; }}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
-          {/* Contact */}
-          <div className="md:col-span-4">
-            <p className="text-white/25 text-[10px] font-semibold uppercase tracking-[0.12em] mb-4">Contact</p>
-            <ul className="space-y-2.5 mb-6">
-              <li>
-                <a href="mailto:contact@ignara.ai" className="text-white/40 hover:text-white text-sm transition-colors duration-200 flex items-center gap-2">
-                  <Mail size={13} className="text-white/20" aria-hidden="true" />
-                  contact@ignara.ai
-                </a>
-              </li>
-              <li>
-                <a href="mailto:jagan@ignara.ai" className="text-white/40 hover:text-white text-sm transition-colors duration-200 flex items-center gap-2">
-                  <Mail size={13} className="text-white/20" aria-hidden="true" />
-                  jagan@ignara.ai
-                </a>
-              </li>
-            </ul>
-            <p className="text-white/25 text-[10px] font-semibold uppercase tracking-[0.12em] mb-4">Legal</p>
-            <ul className="space-y-2.5">
-              {legal.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-white/40 hover:text-white text-sm transition-colors duration-200">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Website col */}
+          <div className="md:col-span-2">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] mb-5" style={{ color: "rgba(240,244,255,0.2)" }}>
+              Website
+            </p>
+            <a href="https://ignara.ai" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm transition-colors duration-200"
+              style={{ color: "rgba(240,244,255,0.38)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.75)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(240,244,255,0.38)"; }}
+            >
+              ignara.ai <ArrowUpRight size={11} aria-hidden="true" />
+            </a>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-3 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-          <p className="text-white/18 text-xs">© 2026 Ignara AI. All rights reserved.</p>
-          <p className="text-white/18 text-xs">ignara.ai</p>
+        {/* Divider + bottom */}
+        <div className="divider mb-8" />
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+          <p className="text-xs" style={{ color: "rgba(240,244,255,0.16)" }}>
+            © 2026 Ignara AI. All rights reserved.
+          </p>
+          <p className="text-xs" style={{ color: "rgba(240,244,255,0.16)" }}>
+            Building the future of AI infrastructure.
+          </p>
         </div>
       </div>
     </footer>
