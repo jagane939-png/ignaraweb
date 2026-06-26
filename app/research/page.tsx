@@ -1,122 +1,136 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ArrowRight, Database, Satellite, MemoryStick, Brain } from "lucide-react";
 
-const inView = (delay = 0) => ({
+const reveal = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6, delay, ease: "easeOut" as const },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.65, delay, ease: "easeOut" as const },
 });
+
+const card: React.CSSProperties = {
+  background: "rgba(255,255,255,0.025)",
+  border: "1px solid rgba(255,255,255,0.07)",
+  borderRadius: "16px",
+  padding: "36px",
+  transition: "transform 0.25s ease, border-color 0.25s ease",
+};
 
 const areas = [
   {
     icon: Database, title: "Data Pipeline Acceleration", subtitle: "Ignara Fabric",
     body: "ML training is bottlenecked at data loading more often than compute. Ignara Fabric is a pipeline acceleration layer that eliminates I/O wait time during training, keeping GPUs saturated and reducing time-to-model.",
     tags: ["PyTorch", "FastAPI", "Prometheus", "Grafana", "Docker"],
-    status: "Active",
+    status: "Active", statusColor: "#34d399", statusBg: "rgba(52,211,153,0.1)", statusBorder: "rgba(52,211,153,0.2)",
   },
   {
     icon: Satellite, title: "Space Situational Awareness", subtitle: "Ignara Space Intelligence",
     body: "Real-time satellite tracking and orbital analytics powered by TLE ingestion, sgp4 propagation, and AI-driven anomaly detection. Built for operational use in defense, commercial, and research contexts.",
     tags: ["sgp4", "TLE", "FastAPI", "Real-time", "Edge AI"],
-    status: "Active",
+    status: "Active", statusColor: "#34d399", statusBg: "rgba(52,211,153,0.1)", statusBorder: "rgba(52,211,153,0.2)",
   },
   {
     icon: MemoryStick, title: "Disaggregated Memory", subtitle: "CXL Memory Research",
     body: "Exploring Compute Express Link (CXL) as a vehicle for disaggregating memory from compute — enabling AI systems to scale memory capacity independently and eliminate stranded DRAM in large GPU clusters.",
     tags: ["CXL", "Memory Fabric", "NUMA", "HBM"],
-    status: "Exploratory",
+    status: "Exploratory", statusColor: "#60a5fa", statusBg: "rgba(96,165,250,0.1)", statusBorder: "rgba(96,165,250,0.2)",
   },
   {
     icon: Brain, title: "Inference Memory Orchestration", subtitle: "KV-Cache Optimization",
     body: "Research into software-defined memory orchestration for LLM inference — KV-cache subsystem optimization, paged attention mechanisms, and token memory efficiency at deployment scale.",
     tags: ["LLM", "KV-Cache", "Paged Attention", "Inference"],
-    status: "Exploratory",
+    status: "Exploratory", statusColor: "#60a5fa", statusBg: "rgba(96,165,250,0.1)", statusBorder: "rgba(96,165,250,0.2)",
   },
 ];
 
-const statusStyle: Record<string, { bg: string; color: string; border: string }> = {
-  Active: { bg: "rgba(16,185,129,0.1)", color: "#34d399", border: "rgba(16,185,129,0.2)" },
-  Exploratory: { bg: "rgba(37,99,235,0.1)", color: "#60a5fa", border: "rgba(37,99,235,0.2)" },
-};
-
 export default function Research() {
   return (
-    <div className="min-h-screen pt-24">
-      <section className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-          style={{ background: "radial-gradient(ellipse 60% 60% at 50% 0%, rgba(37,99,235,0.1) 0%, transparent 70%)" }} />
-        <div className="max-w-6xl mx-auto relative">
-          <motion.div {...inView()}>
-            <p className="text-cyan-400 text-[11px] font-semibold uppercase tracking-[0.14em] mb-4">Research</p>
-            <h1 className="font-bold text-white mb-6 tracking-tight leading-[1.05]" style={{ fontSize: "clamp(40px, 6vw, 64px)" }}>
-              What we are <span className="gradient-text">building</span>
+    <div style={{ minHeight: "100vh", paddingTop: "96px" }}>
+
+      {/* Hero */}
+      <section className="section-pad-sm" style={{ position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(37,99,235,0.1) 0%, transparent 70%)" }} />
+        <div className="container-xl" style={{ position: "relative" }}>
+          <motion.div {...reveal()}>
+            <div className="section-tag">Research</div>
+            <h1 className="display-xl" style={{ color: "#fff", marginBottom: "24px" }}>
+              What we are <span className="gt-white">building</span>
             </h1>
-            <p className="text-[18px] max-w-2xl leading-relaxed" style={{ color: "rgba(240,244,255,0.5)" }}>
+            <p className="body-lg" style={{ color: "rgba(240,244,255,0.5)", maxWidth: "600px" }}>
               Our research spans the full AI infrastructure stack — from data pipelines and memory architecture to satellite intelligence and autonomous systems.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-10 pb-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-20">
-            {areas.map((a, i) => {
-              const s = statusStyle[a.status];
-              return (
-                <motion.div key={a.title} {...inView(i * 0.08)}
-                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="rounded-2xl p-8 transition-all duration-300"
-                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}>
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                      <a.icon size={19} className="text-blue-400" aria-hidden="true" />
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.1em] px-2.5 py-1 rounded-full"
-                      style={{ background: s.bg, color: s.color, border: `1px solid ${s.border}` }}>
-                      {a.status}
-                    </span>
+      {/* Research areas */}
+      <section className="section-pad">
+        <div className="container-xl">
+          <div className="grid-2" style={{ marginBottom: "80px" }}>
+            {areas.map((a, i) => (
+              <motion.div key={a.title} {...reveal(i * 0.08)}
+                style={card}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.13)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; }}>
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "24px" }}>
+                  <div style={{ width: "40px", height: "40px", borderRadius: "12px", background: "rgba(37,99,235,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <a.icon size={18} style={{ color: "#60a5fa" }} aria-hidden="true" />
                   </div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.12em] mb-1 text-cyan-400/70">{a.subtitle}</p>
-                  <h3 className="text-white font-semibold text-[18px] mb-3 tracking-tight">{a.title}</h3>
-                  <p className="text-[14px] leading-relaxed mb-6" style={{ color: "rgba(240,244,255,0.42)" }}>{a.body}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {a.tags.map((tag) => (
-                      <span key={tag} className="px-2.5 py-1 rounded-lg text-[11px]"
-                        style={{ background: "rgba(255,255,255,0.04)", color: "rgba(240,244,255,0.35)", border: "1px solid rgba(255,255,255,0.07)" }}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              );
-            })}
+                  <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "4px 10px", borderRadius: "20px", background: a.statusBg, color: a.statusColor, border: `1px solid ${a.statusBorder}` }}>
+                    {a.status}
+                  </span>
+                </div>
+                <p className="label" style={{ color: "#06b6d4", opacity: 0.7, marginBottom: "6px" }}>{a.subtitle}</p>
+                <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "18px", marginBottom: "12px", letterSpacing: "-0.02em" }}>{a.title}</h3>
+                <p className="body-sm" style={{ color: "rgba(240,244,255,0.5)", marginBottom: "24px" }}>{a.body}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                  {a.tags.map((tag) => (
+                    <span key={tag} style={{ fontSize: "11px", padding: "4px 10px", borderRadius: "6px", background: "rgba(255,255,255,0.04)", color: "rgba(240,244,255,0.35)", border: "1px solid rgba(255,255,255,0.07)" }}>{tag}</span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
           </div>
 
-          <motion.div {...inView()} className="rounded-3xl p-12 md:p-16 relative overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}>
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-              style={{ background: "radial-gradient(ellipse 60% 60% at 100% 100%, rgba(6,182,212,0.07) 0%, transparent 60%)" }} />
-            <div className="relative max-w-2xl">
-              <p className="text-cyan-400 text-[11px] font-semibold uppercase tracking-[0.14em] mb-5">Research Philosophy</p>
-              <h2 className="text-[28px] font-bold text-white mb-5 tracking-tight">We build to learn. We learn to build.</h2>
-              <p className="text-[15px] leading-relaxed mb-4" style={{ color: "rgba(240,244,255,0.5)" }}>
-                At Ignara AI, research and engineering are not separate disciplines. Every exploratory project produces runnable artifacts with reproducible benchmarks. Every production system produces insights that feed back into research.
-              </p>
-              <p className="text-[15px] leading-relaxed mb-8" style={{ color: "rgba(240,244,255,0.5)" }}>
-                The most important advances in AI infrastructure come from teams willing to go deep on hard problems — memory hierarchy, data throughput, distributed coordination — and bring both systems-level rigor and scientific curiosity to the work.
-              </p>
-              <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[14px] transition-all duration-200">
-                Collaborate With Us <ArrowRight size={14} aria-hidden="true" />
-              </Link>
+          {/* Philosophy block */}
+          <motion.div {...reveal()}>
+            <div style={{ ...card, padding: "56px 64px", position: "relative", overflow: "hidden" }}>
+              <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 60% 60% at 100% 100%, rgba(6,182,212,0.07) 0%, transparent 60%)" }} />
+              <div style={{ position: "relative", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "center" }}>
+                <div>
+                  <div className="section-tag">Research Philosophy</div>
+                  <h2 className="display-md" style={{ color: "#fff", marginBottom: "20px" }}>We build to learn.<br />We learn to build.</h2>
+                  <p className="body-md" style={{ color: "rgba(240,244,255,0.5)", marginBottom: "16px" }}>
+                    At Ignara AI, research and engineering are not separate disciplines. Every exploratory project produces runnable artifacts with reproducible benchmarks. Every production system produces insights that feed back into research.
+                  </p>
+                  <p className="body-md" style={{ color: "rgba(240,244,255,0.5)", marginBottom: "32px" }}>
+                    The most important advances in AI infrastructure come from teams willing to go deep on hard problems — memory hierarchy, data throughput, distributed coordination — and bring both systems-level rigor and scientific curiosity to the work.
+                  </p>
+                  <Link href="/contact"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "12px 24px", borderRadius: "10px", background: "#2563eb", color: "#fff", fontWeight: 600, fontSize: "14px", textDecoration: "none" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#1d4ed8"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#2563eb"; }}>
+                    Collaborate With Us <ArrowRight size={14} aria-hidden="true" />
+                  </Link>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {["We ship runnable code, not whitepapers", "Every benchmark is reproducible", "Research informs engineering, engineering informs research", "We go deep on hard systems problems", "Long-term thinking over short-term optimization"].map((item, i) => (
+                    <motion.div key={item} {...reveal(i * 0.06)}
+                      style={{ display: "flex", alignItems: "flex-start", gap: "12px", padding: "14px 16px", borderRadius: "10px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                      <div aria-hidden="true" style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#06b6d4", flexShrink: 0, marginTop: "7px" }} />
+                      <p className="body-sm" style={{ color: "rgba(240,244,255,0.65)" }}>{item}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
       </section>
+
     </div>
   );
 }

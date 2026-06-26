@@ -3,9 +3,28 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, CheckCircle } from "lucide-react";
-import { Button } from "@/components/Button";
 
-const interests = ["AI Infrastructure", "Research Partnership", "Investment", "Career", "Other"];
+const reveal = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.65, delay, ease: "easeOut" as const },
+});
+
+const interests = ["AI Infrastructure", "Research Partnership", "Investment", "Enterprise", "Career", "Other"];
+
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  background: "rgba(255,255,255,0.04)",
+  border: "1px solid rgba(255,255,255,0.09)",
+  borderRadius: "10px",
+  padding: "12px 16px",
+  color: "#fff",
+  fontSize: "14px",
+  outline: "none",
+  transition: "border-color 0.2s",
+  fontFamily: "inherit",
+};
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
@@ -21,17 +40,18 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen pt-24">
+    <div style={{ minHeight: "100vh", paddingTop: "96px" }}>
+
       {/* Hero */}
-      <section className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(ellipse 60% 60% at 50% 0%, rgba(37,99,235,0.1) 0%, transparent 70%)" }} />
-        <div className="max-w-6xl mx-auto text-center relative">
+      <section className="section-pad-sm" style={{ position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(37,99,235,0.1) 0%, transparent 70%)" }} />
+        <div className="container-xl" style={{ position: "relative" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <p className="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-4">Contact</p>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-              Let&apos;s <span className="gradient-text">connect</span>
+            <div className="section-tag">Contact</div>
+            <h1 className="display-xl" style={{ color: "#fff", marginBottom: "24px" }}>
+              Let&apos;s <span className="gt-white">connect</span>
             </h1>
-            <p className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
+            <p className="body-lg" style={{ color: "rgba(240,244,255,0.5)", maxWidth: "520px" }}>
               Whether you&apos;re an investor, researcher, enterprise buyer, or just curious — we&apos;re happy to talk.
             </p>
           </motion.div>
@@ -39,130 +59,105 @@ export default function Contact() {
       </section>
 
       {/* Content */}
-      <section className="py-10 px-6 pb-28">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-12">
-          {/* Info */}
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="md:col-span-2 space-y-8">
-            <div>
-              <h2 className="text-white font-semibold text-xl mb-4">Get in touch</h2>
-              <p className="text-white/40 text-sm leading-relaxed">We respond to every message. No gatekeeping, no auto-replies — a real person will read your note.</p>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 glass rounded-xl">
-                <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="text-blue-400" size={16} aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-white/30 text-xs mb-0.5">General</p>
-                  <a href="mailto:contact@ignara.ai" className="text-white/70 hover:text-white text-sm transition-colors">contact@ignara.ai</a>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 p-4 glass rounded-xl">
-                <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="text-blue-400" size={16} aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-white/30 text-xs mb-0.5">Founder</p>
-                  <a href="mailto:jagan@ignara.ai" className="text-white/70 hover:text-white text-sm transition-colors">jagan@ignara.ai</a>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 p-4 glass rounded-xl">
-                <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="text-blue-400" size={16} aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-white/30 text-xs mb-0.5">Location</p>
-                  <p className="text-white/70 text-sm">United States</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+      <section className="section-pad">
+        <div className="container-xl">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.8fr", gap: "64px", alignItems: "start" }}>
 
-          {/* Form */}
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="md:col-span-3">
-            {sent ? (
-              <div className="glass rounded-2xl p-12 text-center h-full flex flex-col items-center justify-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-green-500/10 flex items-center justify-center mb-2">
-                  <CheckCircle className="text-green-400" size={28} aria-hidden="true" />
-                </div>
-                <h3 className="text-white font-semibold text-xl">Message sent</h3>
-                <p className="text-white/40 text-sm max-w-xs">We&apos;ll get back to you as soon as possible. Thanks for reaching out.</p>
-                <button onClick={() => { setSent(false); setForm({ name: "", email: "", interest: "", message: "" }); }} className="mt-4 text-cyan-400 text-sm hover:text-cyan-300 transition-colors">Send another message</button>
-              </div>
-            ) : (
-              <div className="glass rounded-2xl p-8 space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label htmlFor="name" className="block text-white/50 text-xs mb-2 uppercase tracking-wider">Your Name</label>
-                    <input
-                      id="name"
-                      type="text"
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      placeholder="Jane Smith"
-                      className="w-full bg-white/4 border border-white/8 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-white/6 transition-all"
-                      required
-                    />
+            {/* Info */}
+            <motion.div {...reveal()}>
+              <h2 style={{ color: "#fff", fontWeight: 700, fontSize: "22px", marginBottom: "16px", letterSpacing: "-0.02em" }}>Get in touch</h2>
+              <p className="body-md" style={{ color: "rgba(240,244,255,0.45)", marginBottom: "36px" }}>
+                We respond to every message. No gatekeeping, no auto-replies — a real person will read your note.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "36px" }}>
+                {[
+                  { icon: Mail, label: "General", value: "contact@ignara.ai", href: "mailto:contact@ignara.ai" },
+                  { icon: Mail, label: "Founder", value: "jagan@ignara.ai", href: "mailto:jagan@ignara.ai" },
+                  { icon: MapPin, label: "Location", value: "United States", href: null },
+                ].map((item) => (
+                  <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "14px", padding: "16px 20px", borderRadius: "12px", background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                    <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "rgba(37,99,235,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <item.icon size={15} style={{ color: "#60a5fa" }} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: "11px", color: "rgba(240,244,255,0.3)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600 }}>{item.label}</p>
+                      {item.href ? (
+                        <a href={item.href} className="body-sm" style={{ color: "rgba(240,244,255,0.7)", textDecoration: "none" }}>{item.value}</a>
+                      ) : (
+                        <p className="body-sm" style={{ color: "rgba(240,244,255,0.7)" }}>{item.value}</p>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <label htmlFor="email" className="block text-white/50 text-xs mb-2 uppercase tracking-wider">Email</label>
-                    <input
-                      id="email"
-                      type="email"
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      placeholder="jane@company.com"
-                      className="w-full bg-white/4 border border-white/8 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-white/6 transition-all"
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="interest" className="block text-white/50 text-xs mb-2 uppercase tracking-wider">I&apos;m reaching out about</label>
-                  <select
-                    id="interest"
-                    value={form.interest}
-                    onChange={(e) => setForm({ ...form, interest: e.target.value })}
-                    className="w-full bg-white/4 border border-white/8 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
-                  >
-                    <option value="" className="bg-[#0B1220]">Select a topic</option>
-                    {interests.map((i) => (
-                      <option key={i} value={i} className="bg-[#0B1220]">{i}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-white/50 text-xs mb-2 uppercase tracking-wider">Message</label>
-                  <textarea
-                    id="message"
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    placeholder="Tell us what you're working on or what you'd like to discuss..."
-                    rows={5}
-                    className="w-full bg-white/4 border border-white/8 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-white/6 transition-all resize-none"
-                    required
-                  />
-                </div>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={loading || !form.name || !form.email || !form.message}
-                  className="w-full justify-center"
-                  icon={!loading}
-                >
-                  {loading ? (
-                    <span className="flex items-center gap-2">
-                      <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                      Sending...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2"><Send size={14} aria-hidden="true" /> Send Message</span>
-                  )}
-                </Button>
+                ))}
               </div>
-            )}
-          </motion.div>
+            </motion.div>
+
+            {/* Form */}
+            <motion.div {...reveal(0.1)}>
+              {sent ? (
+                <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "16px", padding: "64px", textAlign: "center" }}>
+                  <div style={{ width: "56px", height: "56px", borderRadius: "50%", background: "rgba(52,211,153,0.1)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
+                    <CheckCircle size={26} style={{ color: "#34d399" }} aria-hidden="true" />
+                  </div>
+                  <h3 style={{ color: "#fff", fontWeight: 700, fontSize: "20px", marginBottom: "10px" }}>Message sent</h3>
+                  <p className="body-md" style={{ color: "rgba(240,244,255,0.45)", maxWidth: "300px", margin: "0 auto 24px" }}>We&apos;ll get back to you as soon as possible. Thanks for reaching out.</p>
+                  <button onClick={() => { setSent(false); setForm({ name: "", email: "", interest: "", message: "" }); }}
+                    style={{ background: "none", border: "none", color: "#06b6d4", fontSize: "14px", cursor: "pointer" }}>
+                    Send another message
+                  </button>
+                </div>
+              ) : (
+                <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "16px", padding: "48px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
+                    <div>
+                      <label htmlFor="name" style={{ display: "block", fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(240,244,255,0.3)", marginBottom: "8px" }}>Your Name</label>
+                      <input id="name" type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        placeholder="Jane Smith" style={inputStyle} required
+                        onFocus={(e) => { (e.target as HTMLInputElement).style.borderColor = "rgba(37,99,235,0.5)"; }}
+                        onBlur={(e) => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.09)"; }} />
+                    </div>
+                    <div>
+                      <label htmlFor="email" style={{ display: "block", fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(240,244,255,0.3)", marginBottom: "8px" }}>Email</label>
+                      <input id="email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        placeholder="jane@company.com" style={inputStyle} required
+                        onFocus={(e) => { (e.target as HTMLInputElement).style.borderColor = "rgba(37,99,235,0.5)"; }}
+                        onBlur={(e) => { (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.09)"; }} />
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: "16px" }}>
+                    <label htmlFor="interest" style={{ display: "block", fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(240,244,255,0.3)", marginBottom: "8px" }}>I&apos;m Reaching Out About</label>
+                    <select id="interest" value={form.interest} onChange={(e) => setForm({ ...form, interest: e.target.value })}
+                      style={{ ...inputStyle, appearance: "none" }}>
+                      <option value="" style={{ background: "#0a1220" }}>Select a topic</option>
+                      {interests.map((i) => <option key={i} value={i} style={{ background: "#0a1220" }}>{i}</option>)}
+                    </select>
+                  </div>
+                  <div style={{ marginBottom: "24px" }}>
+                    <label htmlFor="message" style={{ display: "block", fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(240,244,255,0.3)", marginBottom: "8px" }}>Message</label>
+                    <textarea id="message" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      placeholder="Tell us what you're working on or what you'd like to discuss..."
+                      rows={5} style={{ ...inputStyle, resize: "none" }} required
+                      onFocus={(e) => { (e.target as HTMLTextAreaElement).style.borderColor = "rgba(37,99,235,0.5)"; }}
+                      onBlur={(e) => { (e.target as HTMLTextAreaElement).style.borderColor = "rgba(255,255,255,0.09)"; }} />
+                  </div>
+                  <button onClick={handleSubmit} disabled={loading || !form.name || !form.email || !form.message}
+                    style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "14px", borderRadius: "10px", background: loading || !form.name || !form.email || !form.message ? "rgba(37,99,235,0.5)" : "#2563eb", color: "#fff", fontWeight: 600, fontSize: "15px", border: "none", cursor: loading || !form.name || !form.email || !form.message ? "not-allowed" : "pointer", transition: "background 0.2s" }}>
+                    {loading ? (
+                      <>
+                        <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/></svg>
+                        Sending...
+                      </>
+                    ) : (
+                      <><Send size={15} aria-hidden="true" /> Send Message</>
+                    )}
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </div>
         </div>
       </section>
+
     </div>
   );
 }
