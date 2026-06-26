@@ -14,69 +14,75 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
+function LogoMark({ dim = 28 }: { dim?: number }) {
+  return (
+    <div
+      style={{ width: dim, height: dim }}
+      className="rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center flex-shrink-0"
+    >
+      <svg width={Math.round(dim * 0.58)} height={Math.round(dim * 0.58)} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 1L13.5 4.25V10.75L8 14L2.5 10.75V4.25L8 1Z" stroke="white" strokeWidth="1.4" strokeLinejoin="round"/>
+        <circle cx="8" cy="7.5" r="1.8" fill="white"/>
+        <line x1="8" y1="1" x2="8" y2="5.7" stroke="white" strokeWidth="0.8" opacity="0.5"/>
+        <line x1="8" y1="9.3" x2="8" y2="14" stroke="white" strokeWidth="0.8" opacity="0.5"/>
+        <line x1="13.5" y1="4.25" x2="9.56" y2="6.45" stroke="white" strokeWidth="0.8" opacity="0.5"/>
+        <line x1="6.44" y1="8.55" x2="2.5" y2="10.75" stroke="white" strokeWidth="0.8" opacity="0.5"/>
+        <line x1="2.5" y1="4.25" x2="6.44" y2="6.45" stroke="white" strokeWidth="0.8" opacity="0.5"/>
+        <line x1="9.56" y1="8.55" x2="13.5" y2="10.75" stroke="white" strokeWidth="0.8" opacity="0.5"/>
+      </svg>
+    </div>
+  );
+}
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  useEffect(() => { setOpen(false); }, [pathname]);
 
   return (
     <motion.header
-      initial={{ y: -20, opacity: 0 }}
+      initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "glass border-b border-white/8 py-3"
-          : "bg-transparent py-5"
+        scrolled ? "glass border-b border-white/7 py-3" : "bg-transparent py-5"
       }`}
     >
-      <nav
-        className="max-w-6xl mx-auto px-6 flex items-center justify-between"
-        aria-label="Main navigation"
-      >
-        {/* Logo */}
+      <nav className="max-w-6xl mx-auto px-6 flex items-center justify-between" aria-label="Main navigation">
         <Link href="/" className="flex items-center gap-2.5 group" aria-label="Ignara AI home">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/30 transition-shadow duration-300">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <path d="M9 2L15 6V12L9 16L3 12V6L9 2Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
-              <circle cx="9" cy="9" r="2" fill="white" />
-            </svg>
+          <div className="group-hover:shadow-lg group-hover:shadow-blue-500/30 transition-shadow duration-300 rounded-lg">
+            <LogoMark />
           </div>
-          <span className="text-white font-semibold text-base tracking-tight">
+          <span className="font-semibold tracking-tight text-[15px] text-white">
             Ignara <span className="text-cyan-400">AI</span>
           </span>
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-1" role="list">
+        <ul className="hidden md:flex items-center gap-0.5" role="list">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`relative px-4 py-2 rounded-lg text-sm transition-all duration-200 ${
-                    active
-                      ? "text-white"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
+                  className={`relative px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-200 ${
+                    active ? "text-white" : "text-white/50 hover:text-white/90"
                   }`}
                   aria-current={active ? "page" : undefined}
                 >
                   {active && (
                     <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-lg bg-white/8 border border-white/10"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      layoutId="nav-indicator"
+                      className="absolute inset-0 rounded-lg bg-white/7 border border-white/10"
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
                   <span className="relative">{link.label}</span>
@@ -86,18 +92,16 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* CTA */}
         <Link
           href="/contact"
-          className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/20"
+          className="hidden md:inline-flex px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[13px] font-medium transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25"
         >
           Get in Touch
         </Link>
 
-        {/* Mobile menu button */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/8 transition-all"
+          className="md:hidden p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/6 transition-all"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
         >
@@ -105,7 +109,6 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -113,32 +116,23 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden overflow-hidden border-t border-white/8 glass"
+            className="md:hidden overflow-hidden border-t border-white/7 glass"
           >
             <ul className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-1" role="list">
-              {links.map((link) => {
-                const active = pathname === link.href;
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`block px-4 py-2.5 rounded-lg text-sm transition-all ${
-                        active
-                          ? "text-white bg-white/8"
-                          : "text-white/60 hover:text-white hover:bg-white/5"
-                      }`}
-                      aria-current={active ? "page" : undefined}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`block px-4 py-2.5 rounded-lg text-sm transition-all ${
+                      pathname === link.href ? "text-white bg-white/7" : "text-white/50 hover:text-white hover:bg-white/4"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
               <li className="mt-2">
-                <Link
-                  href="/contact"
-                  className="block px-4 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium text-center transition-all"
-                >
+                <Link href="/contact" className="block px-4 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-medium text-center">
                   Get in Touch
                 </Link>
               </li>
