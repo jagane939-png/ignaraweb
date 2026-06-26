@@ -11,41 +11,17 @@ import {
 } from "lucide-react";
 
 const reveal = (delay = 0) => ({
-  initial: { opacity: 0, y: 32 },
+  initial: { opacity: 0, y: 28 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.65, delay, ease: "easeOut" as const },
 });
 
-const fadeIn = (delay = 0) => ({
-  initial: { opacity: 0 },
-  whileInView: { opacity: 1 },
-  viewport: { once: true },
-  transition: { duration: 0.7, delay },
-});
-
-/* ─── DATA ──────────────────────────────────────────── */
 const builds = [
-  {
-    icon: Cpu, title: "AI Infrastructure", sub: "Compute & Systems",
-    body: "Fault-tolerant compute platforms engineered for AI workloads — optimized for throughput, latency, and horizontal scalability across heterogeneous hardware.",
-    color: "#3b82f6", bg: "rgba(59,130,246,0.07)",
-  },
-  {
-    icon: Network, title: "Distributed Intelligence", sub: "Platform Architecture",
-    body: "Coordination systems for distributed AI inference and training across multi-node clusters — enabling models to operate at scale without centralized bottlenecks.",
-    color: "#06b6d4", bg: "rgba(6,182,212,0.07)",
-  },
-  {
-    icon: FlaskConical, title: "Research Systems", sub: "Applied Research",
-    body: "Purpose-built tooling for ML research pipelines — data ingestion, experiment versioning, reproducibility guarantees, and orchestration at research scale.",
-    color: "#818cf8", bg: "rgba(129,140,248,0.07)",
-  },
-  {
-    icon: Layers, title: "Future Computing", sub: "Long-horizon R&D",
-    body: "Exploratory research into CXL-based memory disaggregation, autonomous infrastructure, and compute architectures designed for the decade ahead.",
-    color: "#34d399", bg: "rgba(52,211,153,0.07)",
-  },
+  { icon: Cpu, title: "AI Infrastructure", sub: "Compute & Systems", body: "Fault-tolerant compute platforms engineered for AI workloads — optimized for throughput, latency, and horizontal scalability across heterogeneous hardware.", color: "#3b82f6", bg: "rgba(59,130,246,0.07)" },
+  { icon: Network, title: "Distributed Intelligence", sub: "Platform Architecture", body: "Coordination systems for distributed AI inference and training across multi-node clusters — enabling models to operate at scale without centralized bottlenecks.", color: "#06b6d4", bg: "rgba(6,182,212,0.07)" },
+  { icon: FlaskConical, title: "Research Systems", sub: "Applied Research", body: "Purpose-built tooling for ML research pipelines — data ingestion, experiment versioning, reproducibility guarantees, and orchestration at research scale.", color: "#818cf8", bg: "rgba(129,140,248,0.07)" },
+  { icon: Layers, title: "Future Computing", sub: "Long-horizon R&D", body: "Exploratory research into CXL-based memory disaggregation, autonomous infrastructure, and compute architectures designed for the decade ahead.", color: "#34d399", bg: "rgba(52,211,153,0.07)" },
 ];
 
 const techFocus = [
@@ -56,7 +32,7 @@ const techFocus = [
 ];
 
 const principles = [
-  { icon: Zap, t: "High Performance", b: "Purpose-built for AI workloads, not adapted from general-purpose infrastructure. Every layer is optimized for throughput and latency." },
+  { icon: Zap, t: "High Performance", b: "Purpose-built for AI workloads — not adapted from general-purpose infrastructure. Every layer is optimized for throughput and latency." },
   { icon: Shield, t: "Reliability", b: "Fault tolerance and graceful degradation engineered at every layer — because production AI systems have zero tolerance for silent failure." },
   { icon: Lock, t: "Security", b: "Isolation, auditability, and least-privilege access patterns baked into the architecture — not applied as an afterthought." },
   { icon: Search, t: "Research-driven", b: "Every design decision is grounded in systems research and validated empirically. Benchmarks, not claims." },
@@ -65,124 +41,104 @@ const principles = [
 ];
 
 const timeline = [
-  {
-    phase: "Today", label: "Foundation", active: true,
-    title: "AI Infrastructure & Intelligent Systems",
-    body: "Ignara Fabric for ML pipeline acceleration. Ignara Space Intelligence for real-time orbital analytics. Foundation for the layer above.",
-  },
-  {
-    phase: "Next", label: "Expansion", active: false,
-    title: "Distributed AI Platforms & Automation",
-    body: "Multi-node distributed inference. CXL memory disaggregation. Automated orchestration of heterogeneous compute at scale.",
-  },
-  {
-    phase: "Future", label: "Long horizon", active: false,
-    title: "Autonomous Infrastructure & Advanced Computing",
-    body: "Self-managing compute fabric. Autonomous infrastructure. Next-generation memory architectures. Planetary-scale AI systems.",
-  },
+  { phase: "Today", label: "Foundation", active: true, title: "AI Infrastructure & Intelligent Systems", body: "Ignara Fabric for ML pipeline acceleration. Ignara Space Intelligence for real-time orbital analytics. Foundation for the layer above." },
+  { phase: "Next", label: "Expansion", active: false, title: "Distributed AI Platforms & Automation", body: "Multi-node distributed inference. CXL memory disaggregation. Automated orchestration of heterogeneous compute at scale." },
+  { phase: "Future", label: "Long horizon", active: false, title: "Autonomous Infrastructure & Advanced Computing", body: "Self-managing compute fabric. Autonomous infrastructure. Next-generation memory architectures. Planetary-scale AI systems." },
 ];
 
 const futureAI = [
   { title: "AI Factories", body: "Vertically integrated compute facilities purpose-built for AI training and inference — where power, cooling, and networking are co-designed with the workload." },
-  { title: "Distributed Inference", body: "Model serving disaggregated across geographic regions — bringing inference closer to data sources, reducing latency, and eliminating central failure points." },
+  { title: "Distributed Inference", body: "Model serving disaggregated across geographic regions — bringing inference closer to data sources, reducing latency, eliminating central failure points." },
   { title: "Autonomous Infrastructure", body: "Infrastructure that self-monitors, self-heals, and self-optimizes — reducing the operational burden of running large-scale AI systems." },
-  { title: "Edge Intelligence", body: "AI inference running at the edge of the network — in satellites, sensors, and endpoints — without requiring round-trips to central compute." },
+  { title: "Edge Intelligence", body: "AI inference at the edge of the network — in satellites, sensors, and endpoints — without requiring round-trips to central compute." },
   { title: "Advanced Networking", body: "Ultra-low-latency interconnects for distributed AI — enabling model parallelism and gradient synchronization at network speed." },
   { title: "Space Computing", body: "Long-horizon research into orbital compute — AI systems that operate in space, processing data closer to where satellites collect it." },
 ];
 
-/* ─── COMPONENT ─────────────────────────────────────── */
+const card: React.CSSProperties = {
+  background: "rgba(255,255,255,0.025)",
+  border: "1px solid rgba(255,255,255,0.07)",
+  borderRadius: "16px",
+  padding: "32px",
+  transition: "transform 0.25s ease, border-color 0.25s ease",
+};
+
+const btnPrimary: React.CSSProperties = {
+  display: "inline-flex", alignItems: "center", gap: "8px",
+  padding: "14px 28px", borderRadius: "12px",
+  background: "#2563eb", color: "white",
+  fontWeight: 600, fontSize: "15px",
+  border: "none", cursor: "pointer", textDecoration: "none",
+  transition: "background 0.2s, box-shadow 0.2s",
+};
+
+const btnSecondary: React.CSSProperties = {
+  display: "inline-flex", alignItems: "center", gap: "8px",
+  padding: "14px 28px", borderRadius: "12px",
+  background: "rgba(255,255,255,0.055)", color: "white",
+  fontWeight: 500, fontSize: "15px",
+  border: "1px solid rgba(255,255,255,0.12)", cursor: "pointer", textDecoration: "none",
+  transition: "border-color 0.2s",
+};
+
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const heroO = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroO = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
     <>
-      {/* ══════════ HERO ══════════ */}
-      <section ref={heroRef} className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden">
+      {/* ══ HERO ══════════════════════════════════════════ */}
+      <section ref={heroRef} style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
         <AnimatedBackground />
 
-        {/* Atmospheric depth layers */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-          style={{ background: "radial-gradient(ellipse 100% 65% at 50% 35%, rgba(37,99,235,0.13) 0%, rgba(6,182,212,0.03) 40%, transparent 65%)" }} />
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-          style={{ background: "radial-gradient(ellipse 60% 40% at 20% 80%, rgba(37,99,235,0.05) 0%, transparent 60%)" }} />
+        {/* Glow layers */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 100% 65% at 50% 35%, rgba(37,99,235,0.13) 0%, rgba(6,182,212,0.03) 40%, transparent 65%)" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 50% 40% at 15% 75%, rgba(37,99,235,0.05) 0%, transparent 60%)" }} />
 
-        <motion.div style={{ y: heroY, opacity: heroO }} className="relative max-w-5xl mx-auto px-6 text-center">
-          <div style={{ paddingTop: "7rem", paddingBottom: "6rem" }}>
-            {/* Eyebrow badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, ease: "easeOut" }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-10"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: "var(--accent)" }} aria-hidden="true" />
-              <span className="label" style={{ color: "var(--text-3)" }}>AI Infrastructure · Intelligent Systems · Future Computing</span>
+        <motion.div style={{ opacity: heroO, position: "relative", width: "100%", paddingTop: "7rem", paddingBottom: "6rem" }}>
+          <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
+            {/* Badge */}
+            <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "20px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", marginBottom: "36px" }}>
+              <span className="pulse-dot" style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#06b6d4", display: "inline-block" }} aria-hidden="true" />
+              <span className="label" style={{ color: "rgba(240,244,255,0.45)" }}>AI Infrastructure · Intelligent Systems · Future Computing</span>
             </motion.div>
 
             {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="display-xl gt-white mb-6"
-            >
+            <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+              className="display-xl gt-white" style={{ marginBottom: "24px" }}>
               Building the Future<br />of AI Infrastructure
             </motion.h1>
 
             {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.2, ease: "easeOut" }}
-              className="body-lg max-w-2xl mx-auto mb-12"
-              style={{ color: "var(--text-2)" }}
-            >
-              Ignara AI develops intelligent infrastructure, distributed AI systems,
-              advanced computing platforms, and long-term research that power the next
-              generation of artificial intelligence.
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.2 }}
+              className="body-lg" style={{ color: "rgba(240,244,255,0.5)", maxWidth: "640px", margin: "0 auto 48px" }}>
+              Ignara AI develops intelligent infrastructure, distributed AI systems, advanced computing platforms, and long-term research that power the next generation of artificial intelligence.
             </motion.p>
 
             {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.3 }}
-              className="flex flex-wrap items-center justify-center gap-4 mb-24"
-            >
-              <Link href="/vision"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-semibold text-[15px] transition-all duration-200"
-                style={{ background: "var(--primary)" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--primary-h)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 32px rgba(37,99,235,0.35)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--primary)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
-              >
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.3 }}
+              style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px", marginBottom: "80px" }}>
+              <Link href="/vision" style={btnPrimary}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#1d4ed8"; (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 32px rgba(37,99,235,0.35)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#2563eb"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}>
                 Explore Our Vision <ArrowRight size={15} aria-hidden="true" />
               </Link>
-              <Link href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-medium text-[15px] transition-all duration-200"
-                style={{ background: "var(--surface-2)", border: "1px solid var(--border-2)" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.2)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border-2)"; }}
-              >
+              <Link href="/contact" style={btnSecondary}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.22)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.12)"; }}>
                 Contact Ignara AI
               </Link>
             </motion.div>
 
-            {/* Stat row */}
-            <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.55 }}
-              className="grid grid-cols-3 max-w-sm mx-auto gap-6 pt-8"
-              style={{ borderTop: "1px solid var(--border)" }}
-            >
-              {[
-                { v: "AI-first", l: "Architecture" },
-                { v: "Research", l: "Driven" },
-                { v: "Long-term", l: "Thinking" },
-              ].map((s) => (
-                <div key={s.l} className="text-center">
-                  <div className="text-white font-bold text-lg mb-1 tracking-tight">{s.v}</div>
-                  <div className="label" style={{ color: "var(--text-3)" }}>{s.l}</div>
+            {/* Stats */}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.5 }}
+              style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", maxWidth: "360px", margin: "0 auto", paddingTop: "32px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+              {[{ v: "AI-first", l: "Architecture" }, { v: "Research", l: "Driven" }, { v: "Long-term", l: "Thinking" }].map((s) => (
+                <div key={s.l} style={{ textAlign: "center" }}>
+                  <div style={{ color: "#fff", fontWeight: 700, fontSize: "17px", marginBottom: "4px", letterSpacing: "-0.02em" }}>{s.v}</div>
+                  <div className="label" style={{ color: "rgba(240,244,255,0.25)" }}>{s.l}</div>
                 </div>
               ))}
             </motion.div>
@@ -190,109 +146,85 @@ export default function Home() {
         </motion.div>
 
         {/* Scroll cue */}
-        <motion.div
-          animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none" aria-hidden="true"
-        >
-          <div className="w-px h-14 bg-gradient-to-b from-white/20 to-transparent" />
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+          style={{ position: "absolute", bottom: "32px", left: "50%", transform: "translateX(-50%)", pointerEvents: "none" }} aria-hidden="true">
+          <div style={{ width: "1px", height: "56px", background: "linear-gradient(to bottom, rgba(255,255,255,0.2), transparent)" }} />
         </motion.div>
       </section>
 
-      {/* ══════════ WHAT WE BUILD ══════════ */}
-      <section className="py-36 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div {...reveal()} className="mb-20">
+      {/* ══ WHAT WE BUILD ════════════════════════════════ */}
+      <section className="section-pad">
+        <div className="container-xl">
+          <motion.div {...reveal()} style={{ marginBottom: "64px" }}>
             <div className="section-tag">What Ignara AI Is Building</div>
-            <h2 className="display-lg text-white max-w-2xl">
-              Infrastructure for the<br />AI-native era
-            </h2>
+            <h2 className="display-lg" style={{ color: "#fff", maxWidth: "520px" }}>Infrastructure for the<br />AI-native era</h2>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid-2">
             {builds.map((c, i) => (
-              <motion.div key={c.title} {...reveal(i * 0.07)}
-                className="rounded-2xl p-8 card-hover"
-                style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
-              >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-6" style={{ background: c.bg }}>
-                  <c.icon size={19} style={{ color: c.color }} aria-hidden="true" />
+              <motion.div key={c.title} {...reveal(i * 0.07)} style={card}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.13)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; }}>
+                <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px" }}>
+                  <c.icon size={18} style={{ color: c.color }} aria-hidden="true" />
                 </div>
-                <p className="label mb-2" style={{ color: c.color + "99" }}>{c.sub}</p>
-                <h3 className="text-white font-semibold text-[18px] mb-3 tracking-tight">{c.title}</h3>
-                <p className="body-sm" style={{ color: "var(--text-2)" }}>{c.body}</p>
+                <p className="label" style={{ color: c.color + "88", marginBottom: "6px" }}>{c.sub}</p>
+                <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "17px", marginBottom: "12px", letterSpacing: "-0.02em" }}>{c.title}</h3>
+                <p className="body-sm" style={{ color: "rgba(240,244,255,0.5)" }}>{c.body}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════ TECHNOLOGY FOCUS ══════════ */}
-      <section className="py-36 px-6" style={{ background: "rgba(0,0,0,0.25)" }}>
-        <div className="max-w-6xl mx-auto">
-          <motion.div {...reveal()} className="mb-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
+      {/* ══ TECHNOLOGY FOCUS ═════════════════════════════ */}
+      <section className="section-pad" style={{ background: "rgba(0,0,0,0.25)" }}>
+        <div className="container-xl">
+          <motion.div {...reveal()} style={{ marginBottom: "64px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "end" }}>
             <div>
               <div className="section-tag">Technology Focus</div>
-              <h2 className="display-lg text-white">Active systems<br />in development</h2>
+              <h2 className="display-lg" style={{ color: "#fff" }}>Active systems<br />in development</h2>
             </div>
-            <p className="body-md" style={{ color: "var(--text-2)" }}>
+            <p className="body-md" style={{ color: "rgba(240,244,255,0.5)" }}>
               We build and ship real systems. Every research direction produces runnable artifacts with reproducible benchmarks — not whitepapers.
             </p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ background: "var(--border)", borderRadius: "16px", overflow: "hidden" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: "rgba(255,255,255,0.07)", borderRadius: "16px", overflow: "hidden" }}>
             {techFocus.map((t, i) => (
               <motion.div key={t.title} {...reveal(i * 0.07)}
-                className="p-8 transition-colors duration-200"
-                style={{ background: "var(--bg-1)" }}
+                style={{ padding: "36px", background: "var(--bg-1)", transition: "background 0.2s" }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--bg-2)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--bg-1)"; }}
-              >
-                <t.icon size={18} className="mb-5" style={{ color: "var(--accent)" }} aria-hidden="true" />
-                <h3 className="text-white font-semibold text-[16px] mb-2.5 tracking-tight">{t.title}</h3>
-                <p className="body-sm" style={{ color: "var(--text-2)" }}>{t.body}</p>
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--bg-1)"; }}>
+                <t.icon size={18} style={{ color: "#06b6d4", marginBottom: "20px" }} aria-hidden="true" />
+                <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "15px", marginBottom: "10px", letterSpacing: "-0.01em" }}>{t.title}</h3>
+                <p className="body-sm" style={{ color: "rgba(240,244,255,0.5)" }}>{t.body}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════ VISION TIMELINE ══════════ */}
-      <section className="py-36 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div {...reveal()} className="mb-20">
+      {/* ══ VISION TIMELINE ══════════════════════════════ */}
+      <section className="section-pad">
+        <div className="container-xl">
+          <motion.div {...reveal()} style={{ marginBottom: "64px" }}>
             <div className="section-tag">Vision Timeline</div>
-            <h2 className="display-lg text-white">Where we are going</h2>
+            <h2 className="display-lg" style={{ color: "#fff" }}>Where we are going</h2>
           </motion.div>
-          <div className="relative">
-            <div className="absolute left-5 md:left-7 top-2 bottom-2 w-px"
-              style={{ background: "linear-gradient(to bottom, #2563eb, rgba(6,182,212,0.3), transparent)" }}
-              aria-hidden="true" />
-            <div className="space-y-8">
+          <div style={{ position: "relative" }}>
+            <div aria-hidden="true" style={{ position: "absolute", left: "18px", top: "8px", bottom: "8px", width: "1px", background: "linear-gradient(to bottom, #2563eb, rgba(6,182,212,0.3), transparent)" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
               {timeline.map((t, i) => (
-                <motion.div key={t.phase} {...reveal(i * 0.1)} className="relative pl-14 md:pl-20">
-                  <div className="absolute left-[14px] md:left-[22px] top-2 w-5 h-5 rounded-full flex items-center justify-center"
-                    style={{
-                      background: t.active ? "#2563eb" : "var(--bg-2)",
-                      border: t.active ? "2px solid rgba(37,99,235,0.4)" : "1px solid var(--border-2)",
-                      boxShadow: t.active ? "0 0 24px rgba(37,99,235,0.5)" : "none",
-                    }} aria-hidden="true">
-                    {t.active && <div className="w-2 h-2 rounded-full bg-white" />}
+                <motion.div key={t.phase} {...reveal(i * 0.1)} style={{ paddingLeft: "56px", position: "relative" }}>
+                  <div aria-hidden="true" style={{ position: "absolute", left: "10px", top: "6px", width: "18px", height: "18px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: t.active ? "#2563eb" : "rgba(255,255,255,0.07)", border: t.active ? "2px solid rgba(37,99,235,0.4)" : "1px solid rgba(255,255,255,0.12)", boxShadow: t.active ? "0 0 24px rgba(37,99,235,0.5)" : "none" }}>
+                    {t.active && <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#fff" }} />}
                   </div>
-                  <div className="rounded-2xl p-8"
-                    style={{
-                      background: t.active ? "rgba(37,99,235,0.06)" : "var(--surface)",
-                      border: t.active ? "1px solid rgba(37,99,235,0.18)" : "1px solid var(--border)",
-                    }}>
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="label px-3 py-1 rounded-full"
-                        style={{
-                          background: t.active ? "rgba(37,99,235,0.15)" : "var(--surface-2)",
-                          color: t.active ? "#60a5fa" : "var(--text-3)",
-                        }}>
-                        {t.phase}
-                      </span>
-                      <span className="label" style={{ color: "var(--text-3)" }}>{t.label}</span>
+                  <div style={{ ...card, background: t.active ? "rgba(37,99,235,0.06)" : "rgba(255,255,255,0.025)", border: t.active ? "1px solid rgba(37,99,235,0.18)" : "1px solid rgba(255,255,255,0.07)" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+                      <span className="label" style={{ padding: "3px 10px", borderRadius: "20px", background: t.active ? "rgba(37,99,235,0.15)" : "rgba(255,255,255,0.06)", color: t.active ? "#60a5fa" : "rgba(255,255,255,0.3)" }}>{t.phase}</span>
+                      <span className="label" style={{ color: "rgba(255,255,255,0.25)" }}>{t.label}</span>
                     </div>
-                    <h3 className="text-white font-semibold text-[19px] mb-3 tracking-tight">{t.title}</h3>
-                    <p className="body-sm" style={{ color: "var(--text-2)" }}>{t.body}</p>
+                    <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "18px", marginBottom: "10px", letterSpacing: "-0.02em" }}>{t.title}</h3>
+                    <p className="body-sm" style={{ color: "rgba(240,244,255,0.5)" }}>{t.body}</p>
                   </div>
                 </motion.div>
               ))}
@@ -301,106 +233,100 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════ ENGINEERING PRINCIPLES ══════════ */}
-      <section className="py-36 px-6" style={{ background: "rgba(0,0,0,0.2)" }}>
-        <div className="max-w-6xl mx-auto">
-          <motion.div {...reveal()} className="text-center mb-20">
+      {/* ══ ENGINEERING PRINCIPLES ═══════════════════════ */}
+      <section className="section-pad" style={{ background: "rgba(0,0,0,0.2)" }}>
+        <div className="container-xl">
+          <motion.div {...reveal()} style={{ textAlign: "center", marginBottom: "64px" }}>
             <div className="section-tag" style={{ justifyContent: "center" }}>Engineering Principles</div>
-            <h2 className="display-lg text-white">Built on first principles</h2>
+            <h2 className="display-lg" style={{ color: "#fff" }}>Built on first principles</h2>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid-3">
             {principles.map((p, i) => (
-              <motion.div key={p.t} {...reveal(i * 0.06)}
-                className="p-8 rounded-2xl card-hover"
-                style={{ background: "var(--surface)", border: "1px solid var(--border)" }}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: "rgba(37,99,235,0.1)" }}>
+              <motion.div key={p.t} {...reveal(i * 0.06)} style={card}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.13)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; }}>
+                <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "rgba(37,99,235,0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px" }}>
                   <p.icon size={16} style={{ color: "#60a5fa" }} aria-hidden="true" />
                 </div>
-                <h3 className="text-white font-semibold text-[16px] mb-2.5 tracking-tight">{p.t}</h3>
-                <p className="body-sm" style={{ color: "var(--text-2)" }}>{p.b}</p>
+                <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "15px", marginBottom: "10px", letterSpacing: "-0.01em" }}>{p.t}</h3>
+                <p className="body-sm" style={{ color: "rgba(240,244,255,0.5)" }}>{p.b}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════ RESEARCH PHILOSOPHY ══════════ */}
-      <section className="py-36 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="rounded-3xl p-12 md:p-20 relative overflow-hidden"
-            style={{ background: "var(--surface)", border: "1px solid var(--border)" }}>
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-              style={{ background: "radial-gradient(ellipse 70% 80% at 100% 0%, rgba(37,99,235,0.07) 0%, transparent 60%)" }} />
-            <motion.div {...reveal()} className="relative grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-              <div>
+      {/* ══ RESEARCH PHILOSOPHY ══════════════════════════ */}
+      <section className="section-pad">
+        <div className="container-xl">
+          <div style={{ ...card, padding: "64px 72px", position: "relative", overflow: "hidden" }}>
+            <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 70% 80% at 100% 0%, rgba(37,99,235,0.07) 0%, transparent 60%)" }} />
+            <div style={{ position: "relative", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "center" }}>
+              <motion.div {...reveal()}>
                 <div className="section-tag">Research Philosophy</div>
-                <h2 className="display-md text-white mb-6">We build to learn.<br />We learn to build.</h2>
-                <p className="body-md mb-5" style={{ color: "var(--text-2)" }}>
+                <h2 className="display-md" style={{ color: "#fff", marginBottom: "24px" }}>We build to learn.<br />We learn to build.</h2>
+                <p className="body-md" style={{ color: "rgba(240,244,255,0.5)", marginBottom: "16px" }}>
                   At Ignara AI, research and engineering are not separate disciplines. Every exploratory project produces runnable artifacts with reproducible benchmarks. Every production system produces insights that feed back into our research agenda.
                 </p>
-                <p className="body-md" style={{ color: "var(--text-2)" }}>
-                  We believe the highest-leverage infrastructure advances come from teams willing to go deep on hard problems — memory hierarchy, data throughput, distributed coordination — with both systems rigor and scientific curiosity.
+                <p className="body-md" style={{ color: "rgba(240,244,255,0.5)" }}>
+                  The highest-leverage advances come from teams willing to go deep on hard problems — memory hierarchy, data throughput, distributed coordination — with both systems rigor and scientific curiosity.
                 </p>
-              </div>
-              <div className="space-y-4">
+              </motion.div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {["Long-term research over short-term optimization", "Infrastructure before applications", "Scalable intelligence as a design constraint", "Distributed systems as the default architecture", "Autonomous computing as the end goal"].map((item, i) => (
-                  <motion.div key={item} {...reveal(i * 0.08)}
-                    className="flex items-start gap-4 p-4 rounded-xl"
-                    style={{ background: "var(--surface-2)", border: "1px solid var(--border)" }}>
-                    <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: "var(--accent)" }} aria-hidden="true" />
-                    <p className="body-sm text-white/70">{item}</p>
+                  <motion.div key={item} {...reveal(i * 0.07)}
+                    style={{ display: "flex", alignItems: "flex-start", gap: "12px", padding: "14px 16px", borderRadius: "10px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                    <div aria-hidden="true" style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#06b6d4", flexShrink: 0, marginTop: "7px" }} />
+                    <p className="body-sm" style={{ color: "rgba(240,244,255,0.65)" }}>{item}</p>
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════ FUTURE OF AI INFRASTRUCTURE ══════════ */}
-      <section className="py-36 px-6" style={{ background: "rgba(0,0,0,0.25)" }}>
-        <div className="max-w-6xl mx-auto">
-          <motion.div {...reveal()} className="mb-6">
+      {/* ══ FUTURE OF AI INFRASTRUCTURE ══════════════════ */}
+      <section className="section-pad" style={{ background: "rgba(0,0,0,0.25)" }}>
+        <div className="container-xl">
+          <motion.div {...reveal()} style={{ marginBottom: "16px" }}>
             <div className="section-tag">Research Direction</div>
-            <h2 className="display-lg text-white max-w-xl">The future of AI infrastructure</h2>
+            <h2 className="display-lg" style={{ color: "#fff", maxWidth: "520px" }}>The future of AI infrastructure</h2>
           </motion.div>
-          <motion.p {...reveal(0.08)} className="body-lg max-w-2xl mb-20" style={{ color: "var(--text-2)" }}>
+          <motion.p {...reveal(0.08)} className="body-lg" style={{ color: "rgba(240,244,255,0.5)", maxWidth: "600px", marginBottom: "64px" }}>
             These are the infrastructure paradigms we believe will define the next decade of AI. We are researching and building toward them today.
           </motion.p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid-3">
             {futureAI.map((f, i) => (
-              <motion.div key={f.title} {...reveal(i * 0.07)}
-                className="p-7 rounded-2xl card-hover"
-                style={{ background: "var(--surface)", border: "1px solid var(--border)" }}>
-                <div className="w-8 h-px mb-6" style={{ background: "linear-gradient(90deg, var(--primary), var(--accent))" }} aria-hidden="true" />
-                <h3 className="text-white font-semibold text-[16px] mb-3 tracking-tight">{f.title}</h3>
-                <p className="body-sm" style={{ color: "var(--text-2)" }}>{f.body}</p>
+              <motion.div key={f.title} {...reveal(i * 0.07)} style={card}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.13)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; }}>
+                <div aria-hidden="true" style={{ width: "32px", height: "1px", background: "linear-gradient(90deg, #2563eb, #06b6d4)", marginBottom: "24px" }} />
+                <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "15px", marginBottom: "12px", letterSpacing: "-0.01em" }}>{f.title}</h3>
+                <p className="body-sm" style={{ color: "rgba(240,244,255,0.5)" }}>{f.body}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════ FOUNDER VISION ══════════ */}
-      <section className="py-36 px-6">
-        <div className="max-w-4xl mx-auto">
+      {/* ══ FOUNDER VISION ═══════════════════════════════ */}
+      <section className="section-pad">
+        <div className="container-md">
           <motion.div {...reveal()}>
-            <div className="rounded-3xl p-12 md:p-16 relative overflow-hidden gb"
-              style={{ background: "var(--surface)" }}>
-              <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-                style={{ background: "radial-gradient(ellipse 60% 60% at 50% 100%, rgba(6,182,212,0.05) 0%, transparent 60%)" }} />
-              <div className="relative">
-                <div className="section-tag" style={{ justifyContent: "flex-start" }}>Founder Vision</div>
-                <blockquote className="display-md text-white mb-10 max-w-2xl">
+            <div style={{ ...card, padding: "64px 72px", position: "relative", overflow: "hidden", border: "1px solid rgba(255,255,255,0.09)" }}>
+              <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 60% 60% at 50% 100%, rgba(6,182,212,0.05) 0%, transparent 60%)" }} />
+              <div aria-hidden="true" style={{ position: "absolute", inset: 0, padding: "1px", borderRadius: "16px", background: "linear-gradient(135deg, rgba(37,99,235,0.3), rgba(6,182,212,0.2), transparent)", WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)", WebkitMaskComposite: "xor", maskComposite: "exclude", pointerEvents: "none" }} />
+              <div style={{ position: "relative" }}>
+                <div className="section-tag">Founder Vision</div>
+                <blockquote className="display-md" style={{ color: "#fff", maxWidth: "680px", marginBottom: "40px", lineHeight: 1.3 }}>
                   &ldquo;The infrastructure layer is the highest-leverage point in the AI stack. Get the foundation right, and everything built on top of it benefits.&rdquo;
                 </blockquote>
-                <div className="flex items-center gap-5">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-[22px] font-bold text-white flex-shrink-0"
-                    style={{ boxShadow: "0 8px 24px rgba(37,99,235,0.3)" }}>J</div>
+                <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                  <div style={{ width: "52px", height: "52px", borderRadius: "14px", background: "linear-gradient(135deg, #2563eb, #06b6d4)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: 700, color: "#fff", boxShadow: "0 8px 24px rgba(37,99,235,0.3)", flexShrink: 0 }}>J</div>
                   <div>
-                    <div className="text-white font-semibold text-[16px]">Jagan E</div>
-                    <div className="body-sm mt-0.5" style={{ color: "var(--accent)" }}>Founder &amp; CEO, Ignara AI</div>
+                    <div style={{ color: "#fff", fontWeight: 600, fontSize: "15px" }}>Jagan E</div>
+                    <div className="body-sm" style={{ color: "#06b6d4", marginTop: "2px" }}>Founder &amp; CEO, Ignara AI</div>
                   </div>
                 </div>
               </div>
@@ -409,32 +335,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════ CTA ══════════ */}
-      <section className="py-36 px-6">
-        <div className="max-w-3xl mx-auto text-center">
+      {/* ══ CTA ══════════════════════════════════════════ */}
+      <section className="section-pad">
+        <div className="container-sm" style={{ textAlign: "center" }}>
           <motion.div {...reveal()}>
             <div className="section-tag" style={{ justifyContent: "center" }}>Contact</div>
-            <h2 className="display-md text-white mb-6">
-              Let&apos;s build the future<br />of AI together
-            </h2>
-            <p className="body-lg mb-12 max-w-xl mx-auto" style={{ color: "var(--text-2)" }}>
-              We are open to conversations with investors, enterprise customers, research partners, and engineers who share our long-term perspective on AI infrastructure.
+            <h2 className="display-md" style={{ color: "#fff", marginBottom: "20px" }}>Let&apos;s build the future<br />of AI together</h2>
+            <p className="body-lg" style={{ color: "rgba(240,244,255,0.5)", marginBottom: "48px", maxWidth: "480px", margin: "0 auto 48px" }}>
+              We are open to conversations with investors, enterprise customers, research partners, and engineers who share our long-term perspective.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-white font-semibold text-[15px] transition-all duration-200"
-                style={{ background: "var(--primary)" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--primary-h)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 16px 40px rgba(37,99,235,0.35)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--primary)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
-              >
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "center" }}>
+              <Link href="/contact" style={btnPrimary}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#1d4ed8"; (e.currentTarget as HTMLElement).style.boxShadow = "0 16px 40px rgba(37,99,235,0.35)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#2563eb"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}>
                 Contact Ignara AI <ArrowRight size={15} aria-hidden="true" />
               </Link>
-              <Link href="/research"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-white font-medium text-[15px] transition-all duration-200"
-                style={{ background: "var(--surface-2)", border: "1px solid var(--border-2)" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.2)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border-2)"; }}
-              >
+              <Link href="/research" style={btnSecondary}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.22)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.12)"; }}>
                 View Research
               </Link>
             </div>
