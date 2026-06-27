@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  experimental: {
+    turbo: {
+      root: __dirname,
+    },
+  },
 };
 
 export default nextConfig;
