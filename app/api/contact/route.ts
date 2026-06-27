@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
     await resend.emails.send({
       from: "Ignara AI Website <no-reply@ignara.ai>",
-      to: "jagan@ignara.ai",
+      to: "jagane939@gmail.com",
       replyTo: email,
       subject: `New message from ${name}${interest ? ` — ${interest}` : ""}`,
       html: `
