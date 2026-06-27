@@ -12,6 +12,7 @@ const links = [
   { href: "/vision", label: "Vision" },
   { href: "/research", label: "Research" },
   { href: "/fabric", label: "Fabric" },
+  { href: "/platform", label: "Platform" },
   { href: "/contact", label: "Contact" },
 ];
 
